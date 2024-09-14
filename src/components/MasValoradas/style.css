@@ -1,0 +1,42 @@
+.cardsbox {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-items: center;
+    text-align: left;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: rgb(23, 23, 23);
+}
+.personajebox {
+    box-sizing: border-box;
+    background-color: rgb(64, 61, 61);
+    padding: 7px;
+    text-align: justify;
+    margin: 40px;
+    margin-left: 20px;
+    width: 15%;
+}
+
+.personajebox p {
+    color: rgb(255, 255, 255);
+
+}
+
+.personajebox h4 {
+    color: rgb(255, 255, 255);
+}
+
+body{
+    background-color: rgb(7, 6, 7);
+}
+
+img{
+    width: 100%
+}
+
+h1{
+    color:white
+}
+
