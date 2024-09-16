@@ -31,7 +31,9 @@ class Peliculas2 extends Component {
               {this.state.peliculas.length > 0 
              
               ?
-              this.state.peliculas.slice(0, 5).map((elm) => <Pelicula2 id={elm.id} poster_path={elm.poster_path} title={elm.title} overview={elm.overview}/>)
+              this.state.peliculas.slice(0, 5).map((elm) => 
+              <Pelicula2 id={elm.id} poster_path={elm.poster_path} title={elm.title} overview={elm.overview}/>
+             )
               :
               <h1>Cargando...</h1>
             }

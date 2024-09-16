@@ -3,6 +3,7 @@ import Pelicula from "../Pelicula/Pelicula";
 import "./style.css";
 let api_key = "701b3103c42750c129f8fa4974fad18a";
 
+
 class Peliculas extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +34,9 @@ class Peliculas extends Component {
               {this.state.peliculas.length > 0 
              
               ?
-              this.state.peliculas.slice(0, 5).map((elm) => <Pelicula id={elm.id} poster_path={elm.poster_path} title={elm.title} overview={elm.overview}/>)
+              this.state.peliculas.slice(0, 5).map((elm) => 
+              <Pelicula id={elm.id} poster_path={elm.poster_path} title={elm.title} overview={elm.overview}/>
+             )
               :
               <h1>Cargando...</h1>
             }

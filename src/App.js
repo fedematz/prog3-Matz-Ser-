@@ -6,6 +6,7 @@ import Favoritos from "./screens/Favoritos";
 import masValoradas from "./screens/masValoradas";
 import Populares from "./screens/Populares";
 import {Switch, Route} from "react-router-dom";
+import Detalle from "./screens/Detalle";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
     <Route path="/favoritos" component={Favoritos}/>
     <Route path="/Populares" component={Populares}/>
     <Route path="/masValoradas" component={masValoradas}/>
+    <Route path="/Detalle/id/:id" component={Detalle}/>
     <Route path="" component={NotFound}/>
     </Switch>
   

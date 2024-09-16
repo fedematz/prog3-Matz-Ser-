@@ -1,7 +1,6 @@
 import React from "react";
 import Peliculas from "../components/Peliculas/Peliculas";
 import Peliculas2 from "../components/Peliculas2/Peliculas2";
-import NavBar from "../components/NavBar/NavBar";
 import {Link} from "react-router-dom";
 
 function Home() {

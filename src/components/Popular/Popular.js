@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Popular extends Component {
     constructor(props) {
@@ -40,9 +41,11 @@ class Popular extends Component {
     render() {
         return (
             <div className="personajebox">
+            <Link to={`/Detalle/id/${this.state.id}`}>
                 <img src={`https://image.tmdb.org/t/p/w342/${this.state.poster_path}`} alt=""/>
                 <h4>{this.state.title}</h4>
                 {this.state.verDescripcion== false ? null : <p>{this.state.overview}</p> }
+            </Link>
                 <button onClick={() => this.info()}> {this.state.botonDescripcion} </button>
                 <button onClick={() => this.fav()}> {this.state.favoritosBoton} </button>
                 
