@@ -6,35 +6,43 @@ class NavBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            peliculas: []
+            peliculas: [],
+            valorInput1:""
            
         };
     }
 
-    componentDidMount() {
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${api_key}`)
-            .then((resp) => resp.json())
-            .then((data) => {
-                console.log('data', data);
-                this.setState({
-                    peliculas: data.results
-                    
-                });
-            })
-            .catch((err) => console.log(err));
+
+    controlarInputs(event){
+        this.setState({
+            valorInput1: event.target.value
+        }, () => this.busqueda()
+        )
     }
+
+    evitarSubmit(event){
+        event.preventDefault()
+        this.props.history.push('/favoritos', {busqueda: this.state.valorInput1})
+    }
+
+
 
 
     render(){
         return (
             <div className = "cardsbox">
-              {this.state.peliculas.length > 0 
-             
-              ?
-              this.state.peliculas.slice(0, 5).map((elm) => <Pelicula id={elm.id} poster_path={elm.poster_path} title={elm.title} overview={elm.overview}/>)
-              :
-              <h1>Cargando...</h1>
-            }
+
+            <form onSubmit={(e) => this.evitarSubmit(e)} >
+                <input
+                    onChange={(event)=> this.controlarInputs(event)} 
+                    type ="text" 
+                    placeholder="Buscar película"
+                />
+                <button type="submit">Buscar</button>
+               
+            </form>
+
+
     
             </div>
    )}

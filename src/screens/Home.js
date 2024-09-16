@@ -1,12 +1,16 @@
 import React from "react";
 import Peliculas from "../components/Peliculas/Peliculas";
 import Peliculas2 from "../components/Peliculas2/Peliculas2";
+import NavBar from "../components/NavBar/NavBar";
 import {Link} from "react-router-dom";
 
-function Home() {
+function Home(props) {
+    console.log('props home', props)
     return (
   
         <React.Fragment>
+            
+            <NavBar location={props.location} history={props.history}/>
 
             <h1>Películas mas populares</h1>
             <main>
