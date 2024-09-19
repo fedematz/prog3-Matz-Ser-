@@ -27,7 +27,7 @@ function Header() {
                 {opciones.map((elem) => <HeaderHijo dato={elem} />)}
             </ul>
             <ul className="user">
-                <li><img src="./img/logo.png" alt="" /></li>
+                <li><img src="./img/MOVIES.png" alt="" /></li>
             </ul>
             
         </nav>

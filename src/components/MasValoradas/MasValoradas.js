@@ -10,7 +10,8 @@ class masValoradas extends Component {
         super(props)
         this.state = {
             peliculas: [],
-            peliculasOriginales:[]
+            peliculasOriginales:[],
+            loading: true
         };
     }
 
@@ -22,7 +23,8 @@ class masValoradas extends Component {
                 console.log('data', data)
                 this.setState({
                     peliculas: data.results,
-                    peliculasOriginales:data.results
+                    peliculasOriginales:data.results,
+                    loading: false
                 })
             })
             .catch((err) => console.log(err))
@@ -39,17 +41,24 @@ class masValoradas extends Component {
     };
 
     render() {
+        const loading = this.state.loading;
         return (
-
-            
             <div>
              
                 <MiComponenteControlado filtrarPeliculas={this.filtrarPeliculas} />
                 
                 <section className="cardsbox">
-                {this.state.peliculas.length > 0
-                    ? this.state.peliculas.map((elm) => (
-                  
+
+                {loading ? (
+                    <div className="loading-container">
+                        <h1>Cargando...</h1>
+                        <img src="/img/giphy.png" alt="Cargando..." />
+                    </div>
+                ) : (
+
+                this.state.peliculas.length > 0
+                    ? ( this.state.peliculas.map((elm) => (
+                
                         <MasValorada
                             key={`${elm.id}-${elm.title}`}
                             id={elm.id}
@@ -59,8 +68,9 @@ class masValoradas extends Component {
                         />
                    
                     ))
-                    : <h1>Cargando...</h1>
-                }
+                 ) : <img className="loading" src="/img/giphy.png" alt="Cargando..." />
+                )
+            }
                 </section>
             </div>
         );

@@ -7,7 +7,8 @@ class Peliculas2 extends Component {
     constructor(props){
         super(props)
         this.state = {
-            peliculas: []
+            peliculas: [],
+            loading: true
         }
     }
 
@@ -18,7 +19,8 @@ class Peliculas2 extends Component {
             .then((data) => {
                 console.log('data', data)
                 this.setState({
-                    peliculas: data.results
+                    peliculas: data.results,
+                    loading: false
                 })
             })
             .catch((err) => console.log(err))
@@ -26,22 +28,28 @@ class Peliculas2 extends Component {
     
 
     render(){
+        const loading = this.state.loading;
         return (
-            <div className = "cardsbox">
-              {this.state.peliculas.length > 0 
-             
-              ?
-              this.state.peliculas.slice(0, 5).map((elm) => 
-              <Pelicula2 id={elm.id} poster_path={elm.poster_path} title={elm.title} overview={elm.overview}/>
-             )
-              :
-              <h1>Cargando...</h1>
-            }
-    
+            <div className="cardsbox">
+                {loading ? (
+                    <div className="loading-container">
+                        <h1>Cargando...</h1>
+                        <img src="/img/giphy.png" alt="Cargando..." />
+                    </div>
+                ) : (
+                    <>
+                        {this.state.peliculas.length > 0 ? (
+                            this.state.peliculas.slice(0, 5).map((elm) => (
+                                <Pelicula2 id={elm.id} poster_path={elm.poster_path} title={elm.title} overview={elm.overview} />
+                            ))
+                        ) : (
+                            <h1>Cargando...</h1>
+                        )}
+                    </>
+                )}
             </div>
-   )}
-    
-
+        );
+    }
 }
 
 export default Peliculas2;

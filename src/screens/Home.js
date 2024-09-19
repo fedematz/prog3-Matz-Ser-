@@ -1,7 +1,8 @@
 import React from "react";
 import Peliculas from "../components/Peliculas/Peliculas";
 import Peliculas2 from "../components/Peliculas2/Peliculas2";
-import NavBar from "../components/NavBar/NavBar";
+import Busqueda from "../components/Busqueda/Busqueda";
+import "../components/Peliculas/style.css";
 import {Link} from "react-router-dom";
 
 function Home(props) {
@@ -10,7 +11,11 @@ function Home(props) {
   
         <React.Fragment>
             
-            <NavBar location={props.location} history={props.history}/>
+			<img className="banner" src="img/banner.png" alt="Banner de ofertas"/>
+            
+			
+            
+            <Busqueda location={props.location} history={props.history}/>
 
             <h1>Películas mas populares</h1>
             <main>

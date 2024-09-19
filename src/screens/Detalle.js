@@ -6,7 +6,8 @@ class Detalle extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pelicula: []
+            pelicula: [],
+            loading: true
         };
     }
 
@@ -18,16 +19,24 @@ class Detalle extends Component {
             .then((data) => {
                 
                 this.setState({
-                    pelicula: data
+                    pelicula: data,
+                    loading: false
                 });
             })
             .catch((err) => console.log(err));
     }
 
     render() {
-      
+        const loading = this.state.loading;
         return (
-            <div className="personajebox">
+            <div className="detalle">
+               {loading ? (
+                    <div className="loading">
+                        <img src="/img/giphy.png" alt="Cargando..." />
+                    </div>
+                ) : (  
+   
+                <div className="sectiondetalle">   
                 <h1>Detalle de: {this.state.pelicula.title}</h1>
                 <img src={`https://image.tmdb.org/t/p/w500/${this.state.pelicula.poster_path}`} alt="" />
                 <p> Descripción: {this.state.pelicula.overview}</p>
@@ -36,8 +45,10 @@ class Detalle extends Component {
                 <p> Genero: {this.state.pelicula.genre_ids} </p>
                 
             </div>
-        );
-    }
+        )}
+        </div>
+    )}
 }
+
 
 export default Detalle;
