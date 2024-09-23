@@ -10,7 +10,8 @@ class Populares extends Component {
         this.state = {
             peliculas: [],
             peliculasOriginales: [],
-            loading: true 
+            loading: true,
+            paginaACargar:2
         };
     }
 
@@ -19,7 +20,7 @@ class Populares extends Component {
         fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${api_key}`)
             .then((resp) => resp.json())
             .then((data) => {
-                console.log('data', data)
+                console.log('data que recibi', data)
                 this.setState({
                     peliculas: data.results,
                     peliculasOriginales: data.results,
@@ -38,6 +39,17 @@ class Populares extends Component {
             peliculas: peliculasFiltradas
         });
     };
+
+    cargarMas(){
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&page=${this.state.paginaACargar}`)
+        .then(resp => resp.json())
+        .then(data => this.setState({peliculas:this.state.peliculas.concat(data.results),
+            peliculasOriginales:this.state.peliculas.concat(data.results),
+            paginaACargar:this.state.paginaACargar + 1
+
+        }))
+        .catch(err => console.log(err))
+    }
 
     render() {
         const loading = this.state.loading;
@@ -70,6 +82,8 @@ class Populares extends Component {
                 )
                 }
                 </section>
+
+                <button onClick={() => this.cargarMas()}>cargar mas</button>
             </div>
         );
     }

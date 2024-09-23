@@ -8,6 +8,7 @@
     margin-top: 15px;
     margin-bottom: 15px;
     background-color: rgb(23, 23, 23);
+    
 }
 .personajebox {
     box-sizing: border-box;
@@ -21,7 +22,6 @@
 
 .personajebox p {
     color: rgb(255, 255, 255);
-    font-size: 15px;
 
 }
 
@@ -41,3 +41,7 @@ h1{
     color:white
 }
 
+p{
+    color: white;
+    font-size: 20px;
+}

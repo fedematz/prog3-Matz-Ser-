@@ -11,34 +11,59 @@ class Popular extends Component {
             botonDescripcion: "Ver más",
             overview: props.overview,
             detalleBoton: "Ir a detalle",
-            favoritos: false,
-            favoritosBoton: "Agregar a favoritos", 
-            id: props.id
+            id: props.id,
+            esFavorito: false
 
         }
     }
 
-    info() {
-        this.state.verDescripcion == false ? this.setState({
-            verDescripcion: true,
-            botonDescripcion: "Ver menos"
-        }) : this.setState({
-            verDescripcion: false,
-            botonDescripcion: "Ver mas"
-        })
+    componentDidMount() {
+        console.log('props', this.props)
+        // Revisa el localStorage para ver si ya está en favoritos
+        const storage = localStorage.getItem('categoriasFavs');
+        if (storage) {
+            const favoritosArray = JSON.parse(storage);
+            if (favoritosArray.includes(this.state.id)) {
+                this.setState({ esFavorito: true });
+            }
+        }
     }
 
-    fav() {
-        this.state.favoritos == false ? this.setState({
-            favoritos: true,
-            favoritosBoton: "Quitar de favoritos"
-        }) : this.setState({
-            favoritos: false,
-            favoritosBoton: "Agregar a favoritos"
-        })
+    info = () => {
+        // Usamos el valor actual del estado para alternar
+        if (this.state.verDescripcion === false) {
+            this.setState({
+                verDescripcion: true,
+                botonDescripcion: "Ver menos"
+            });
+        } else {
+            this.setState({
+                verDescripcion: false,
+                botonDescripcion: "Ver más"
+            });
+        }
+    }
+    
+    fav = () => {
+        const { id, esFavorito } = this.state;
+        const storage = localStorage.getItem('categoriasFavs');
+        let favoritosArray = storage ? JSON.parse(storage) : [];
+
+        if (esFavorito) {
+            // Quitar de favoritos
+            favoritosArray = favoritosArray.filter(favId => favId !== id);
+            localStorage.setItem('categoriasFavs', JSON.stringify(favoritosArray));
+            this.setState({ esFavorito: false });
+        } else {
+            // Agregar a favoritos
+            favoritosArray.push(id);
+            localStorage.setItem('categoriasFavs', JSON.stringify(favoritosArray));
+            this.setState({ esFavorito: true });
+        }
     }
 
     render() {
+        
         return (
             <div className="personajebox">
             <Link to={`/Detalle/id/${this.state.id}`}>
@@ -46,8 +71,15 @@ class Popular extends Component {
                 <h4>{this.state.title}</h4>
                 {this.state.verDescripcion== false ? null : <p>{this.state.overview}</p> }
             </Link>
-                <button onClick={() => this.info()}> {this.state.botonDescripcion} </button>
-                <button onClick={() => this.fav()}> {this.state.favoritosBoton} </button>
+                 {/* Botón para mostrar u ocultar descripción */}
+                 <button onClick={this.info}>
+                    {this.state.botonDescripcion}
+                </button>
+
+                {/* Botón para agregar o quitar de favoritos */}
+                <button onClick={this.fav}>
+                    {this.state.esFavorito ? "Sacar de favoritos" : "Agregar a favoritos"}
+                </button>
                 
             </div>
         )

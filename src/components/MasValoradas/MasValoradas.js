@@ -11,7 +11,8 @@ class masValoradas extends Component {
         this.state = {
             peliculas: [],
             peliculasOriginales:[],
-            loading: true
+            loading: true,
+            paginaACargar:2
         };
     }
 
@@ -39,6 +40,18 @@ class masValoradas extends Component {
             peliculas: peliculasFiltradas
         });
     };
+
+
+    cargarMas(){
+        fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${api_key}&page=${this.state.paginaACargar}`)
+        .then(resp => resp.json())
+        .then(data => this.setState({peliculas:this.state.peliculas.concat(data.results),
+            peliculasOriginales:this.state.peliculas.concat(data.results),
+            paginaACargar:this.state.paginaACargar + 1
+
+        }))
+        .catch(err => console.log(err))
+    }
 
     render() {
         const loading = this.state.loading;
@@ -72,6 +85,7 @@ class masValoradas extends Component {
                 )
             }
                 </section>
+                <button onClick={() => this.cargarMas()}>cargar mas</button>
             </div>
         );
     }

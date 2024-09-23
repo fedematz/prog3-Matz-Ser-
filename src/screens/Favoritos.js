@@ -1,12 +1,12 @@
 import React from "react";
-
+import Favoritoscomponent from "../components/Favoritos/Favoritoscomponent";
 
 function Favoritos() {
     return (
-  
-        <h1> My app in react</h1>
-            
-    )
+      <React.Fragment>
+        <Favoritoscomponent /> {/* Llamamos al componente correcto */}
+      </React.Fragment>
+    );
 }
 
-export default Favoritos
+export default Favoritos;

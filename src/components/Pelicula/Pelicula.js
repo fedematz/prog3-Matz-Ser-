@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 class Pelicula extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             poster_path: props.poster_path,
             title: props.title,
@@ -11,92 +11,82 @@ class Pelicula extends Component {
             botonDescripcion: "Ver más",
             overview: props.overview,
             detalleBoton: "Ir a detalle",
-            favoritos: false,
-            favoritosBoton: "Agregar a favoritos", 
             id: props.id,
-            esFavorito: false
-
-        }
+            esFavorito: false, // Inicialmente asumimos que no está en favoritos
+        };
     }
 
-    componentDidMount(){
-        let storage = localStorage.getItem('categoriasFavs')
-        if(storage !== null){
-            let arrParseado = JSON.parse(storage)
-            let estaMiId = arrParseado.includes(this.state.id)
-            if(estaMiId){
-                this.setState({
-                    esFavorito: true
-                })
+    componentDidMount() {
+        console.log('props', this.props)
+        // Revisa el localStorage para ver si ya está en favoritos
+        const storage = localStorage.getItem('categoriasFavs');
+        if (storage) {
+            const favoritosArray = JSON.parse(storage);
+            if (favoritosArray.includes(this.state.id)) {
+                this.setState({ esFavorito: true });
             }
         }
     }
 
-
-    info() {
-        this.state.verDescripcion == false ? this.setState({
-            verDescripcion: true,
-            botonDescripcion: "Ver menos"
-        }) : this.setState({
-            verDescripcion: false,
-            botonDescripcion: "Ver mas"
-        })
-    }
-
-
-    fav() {
-        this.state.favoritos == false ? this.setState({
-            favoritos: true,
-            favoritosBoton: "Quitar de favoritos"
-        }) : this.setState({
-            favoritos: false,
-            favoritosBoton: "Agregar a favoritos"
-        })
-    }
-
-    agregarAStorage(id){
-        let storage = localStorage.getItem('categoriasFavs')
-        if(storage !== null){
-            let storageParseado = JSON.parse(storage)
-            storageParseado.push(id)
-            let storageStringificado = JSON.stringify(storageParseado)
-            localStorage.setItem('categoriasFavs', storageStringificado)
+    // Método para alternar entre mostrar y ocultar descripción
+    info = () => {
+        // Usamos el valor actual del estado para alternar
+        if (this.state.verDescripcion === false) {
+            this.setState({
+                verDescripcion: true,
+                botonDescripcion: "Ver menos"
+            });
         } else {
-            let arrFavs = [id]
-            let favsStringificado = JSON.stringify(arrFavs)
-            localStorage.setItem('categoriasFavs', favsStringificado)
+            this.setState({
+                verDescripcion: false,
+                botonDescripcion: "Ver más"
+            });
         }
-
-        this.setState({
-            esFavorito: true
-        })
     }
 
+    // Método para agregar o quitar de favoritos
+    fav = () => {
+        const { id, esFavorito } = this.state;
+        const storage = localStorage.getItem('categoriasFavs');
+        let favoritosArray = storage ? JSON.parse(storage) : [];
+
+        if (esFavorito) {
+            // Quitar de favoritos
+            favoritosArray = favoritosArray.filter(favId => favId !== id);
+            localStorage.setItem('categoriasFavs', JSON.stringify(favoritosArray));
+            this.setState({ esFavorito: false });
+        } else {
+            // Agregar a favoritos
+            favoritosArray.push(id);
+            localStorage.setItem('categoriasFavs', JSON.stringify(favoritosArray));
+            this.setState({ esFavorito: true });
+        }
+    }
 
     render() {
-        const id = this.state.id
+        const { poster_path, title, overview, verDescripcion, botonDescripcion, esFavorito } = this.state;
+
         return (
-            
             <div className="personajebox">
-                 <Link to={`/Detalle/id/${this.state.id}`}>
-                <img src={`https://image.tmdb.org/t/p/w342/${this.state.poster_path}`} alt=""/>
-                <h4>{this.state.title}</h4>
-                {this.state.verDescripcion== false ? null : <p>{this.state.overview}</p> }
+                <Link to={`/Detalle/id/${this.state.id}`}>
+                    <img src={`https://image.tmdb.org/t/p/w342/${poster_path}`} alt={title} />
+                    <h4>{title}</h4>
+                    {verDescripcion && <p>{overview}</p>}
+                    
                 </Link>
-                <button onClick={() => this.info()}> {this.state.botonDescripcion} </button>
-                {
-                this.state.esFavorito ?
-                <button>
-                    Sacar de favoritos
-                </button>
-                :
-                <button onClick={() => this.agregarAStorage(this.state.id) }>
-                    Agregar a favoritos 
-                </button>
-            }
                 
+                {/* Botón para mostrar u ocultar descripción */}
+                <button onClick={this.info}>
+                    {botonDescripcion}
+                </button>
+
+                {/* Botón para agregar o quitar de favoritos */}
+                <button onClick={this.fav}>
+                    {esFavorito ? "Sacar de favoritos" : "Agregar a favoritos"}
+                </button>
             </div>
-        )
-}}
+        );
+    }
+}
 
 export default Pelicula;

@@ -10,6 +10,7 @@ import Detalle from "./screens/Detalle";
 import Search from "./screens/Search"; 
 
 
+
 function App() {
   return (
    <>
@@ -17,7 +18,7 @@ function App() {
 
     <Switch>
     <Route path="/" exact={true} component={Home}/>
-    <Route path="/favoritos" component={Favoritos}/>
+    <Route path="/favoritos" component={Favoritos} /> 
     <Route path="/Populares" component={Populares}/>
     <Route path="/masValoradas" component={masValoradas}/>
     <Route path="/Detalle/id/:id" component={Detalle}/>
