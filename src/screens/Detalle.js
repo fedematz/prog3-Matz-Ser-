@@ -7,7 +7,8 @@ class Detalle extends Component {
         super(props);
         this.state = {
             pelicula: [],
-            loading: true
+            loading: true,
+            generos: [],
         };
     }
 
@@ -24,10 +25,30 @@ class Detalle extends Component {
                 });
             })
             .catch((err) => console.log(err));
+
+            fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${api_key}&language=es`)
+            .then((resp) => resp.json())
+            .then((data) => {
+                this.setState({
+                    generos: data.genres 
+                });
+            })
+            .catch((err) => console.log(err));
+
     }
 
+     obtenerGeneros = () => {
+        const { pelicula, generos } = this.state;
+        if (pelicula.genres && generos.length > 0) {
+            return pelicula.genres.map((genre) => genre.name).join(", ");
+        }
+        return "Géneros no disponibles";
+    };
+
+    
+
     render() {
-        const loading = this.state.loading;
+        const {loading} = this.state;
         return (
             <div className="detalle">
                {loading ? (
@@ -42,7 +63,7 @@ class Detalle extends Component {
                 <p> Descripción: {this.state.pelicula.overview}</p>
                 <p> Rating: {this.state.pelicula.vote_average} </p>
                 <p> Fecha de estreno: {this.state.pelicula.release_date} </p>
-                <p> Genero: {this.state.pelicula.genre_ids} </p>
+                <p> Géneros: {this.obtenerGeneros()} </p>
                 
             </div>
         )}

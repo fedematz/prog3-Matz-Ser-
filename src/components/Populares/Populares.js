@@ -68,7 +68,9 @@ class Populares extends Component {
                 ) : (
 
                 this.state.peliculas.length > 0
-                    ? (this.state.peliculas.map((elm) => (
+                    ? 
+                    <>
+                    {this.state.peliculas.map((elm) => (
                         <Popular
                             key={`${elm.id}-${elm.title}`}
                             id={elm.id}
@@ -78,12 +80,14 @@ class Populares extends Component {
                         />
                    
                     ))
-                ) : <img className="loading" src="/img/giphy.png" alt="Cargando..." />
+                     } <button onClick={() => this.cargarMas()}>Cargar más</button> 
+                      </>
+                     : <img className="loading" src="/img/giphy.png" alt="Cargando..." />
                 )
                 }
                 </section>
 
-                <button onClick={() => this.cargarMas()}>cargar mas</button>
+              
             </div>
         );
     }

@@ -70,7 +70,9 @@ class masValoradas extends Component {
                 ) : (
 
                 this.state.peliculas.length > 0
-                    ? ( this.state.peliculas.map((elm) => (
+                    ?  
+                    <>
+                        {this.state.peliculas.map((elm) => (
                 
                         <MasValorada
                             key={`${elm.id}-${elm.title}`}
@@ -80,12 +82,16 @@ class masValoradas extends Component {
                             overview={elm.overview}
                         />
                    
-                    ))
-                 ) : <img className="loading" src="/img/giphy.png" alt="Cargando..." />
+                        ))
+                        }
+                    <button onClick={() => this.cargarMas()}>Cargar más</button>
+                    </>
+
+                 
+                 : <img className="loading" src="/img/giphy.png" alt="Cargando..." />
                 )
             }
                 </section>
-                <button onClick={() => this.cargarMas()}>cargar mas</button>
             </div>
         );
     }
